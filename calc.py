@@ -43,25 +43,25 @@ class CalculatorApp:
         self.result = None
         self.input_path = "Input data.txt"
         self.output_path = "Output data.txt"
-def import_data(self):
-    if not os.path.exists(self.input_path):
-        messagebox.showerror("Помилка", f"Файл {self.input_path} не знайдено.")
-        return
+    def import_data(self):
+        if not os.path.exists(self.input_path):
+            messagebox.showerror("Помилка", f"Файл {self.input_path} не знайдено.")
+            return
 
-    try:
-        with open(self.input_path, "r", encoding="utf-8") as f:
-            line = f.readline().strip()
-            parts = line.replace(",", " ").split()
-            if len(parts) >= 2:
-                self.num1.set(float(parts[0]))
-                self.num2.set(float(parts[1]))
-                messagebox.showinfo("Імпорт", f"Дані імпортовано: {parts[0]}, {parts[1]}")
-                logging.info(f"Імпортовано дані: {parts}")
-            else:
-                raise ValueError("Недостатньо параметрів у файлі.")
-    except Exception as e:
-        messagebox.showerror("Помилка", str(e))
-def calculate(self):
+        try:
+            with open(self.input_path, "r", encoding="utf-8") as f:
+                line = f.readline().strip()
+                parts = line.replace(",", " ").split()
+                if len(parts) >= 2:
+                    self.num1.set(float(parts[0]))
+                    self.num2.set(float(parts[1]))
+                    messagebox.showinfo("Імпорт", f"Дані імпортовано: {parts[0]}, {parts[1]}")
+                    logging.info(f"Імпортовано дані: {parts}")
+                else:
+                    raise ValueError("Недостатньо параметрів у файлі.")
+        except Exception as e:
+            messagebox.showerror("Помилка", str(e))
+    def calculate(self):
             a = self.num1.get()
             b = self.num2.get()
             op = self.operation.get()
@@ -87,6 +87,16 @@ def calculate(self):
             except Exception as e:
                 messagebox.showerror("Помилка", str(e))
                 logging.error(f"Помилка обчислення: {e}")
+    def export_result(self):
+        if self.result is None:
+            messagebox.showwarning("Увага", "Спочатку виконайте обчислення.")
+            return
+
+        with open(self.output_path, "a", encoding="utf-8") as f:
+            line = f"{self.num1.get()} {self.operation.get()} {self.num2.get()}, Результат: {self.result}\n"
+            f.write(line)
+        messagebox.showinfo("Експорт", "Результат збережено у Output data.txt")
+        logging.info(f"Експортовано результат: {line.strip()}")
 
 if __name__ == "__main__":
     root = tk.Tk()
