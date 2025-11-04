@@ -43,7 +43,24 @@ class CalculatorApp:
         self.result = None
         self.input_path = "Input data.txt"
         self.output_path = "Output data.txt"
+def import_data(self):
+    if not os.path.exists(self.input_path):
+        messagebox.showerror("Помилка", f"Файл {self.input_path} не знайдено.")
+        return
 
+    try:
+        with open(self.input_path, "r", encoding="utf-8") as f:
+            line = f.readline().strip()
+            parts = line.replace(",", " ").split()
+            if len(parts) >= 2:
+                self.num1.set(float(parts[0]))
+                self.num2.set(float(parts[1]))
+                messagebox.showinfo("Імпорт", f"Дані імпортовано: {parts[0]}, {parts[1]}")
+                logging.info(f"Імпортовано дані: {parts}")
+            else:
+                raise ValueError("Недостатньо параметрів у файлі.")
+    except Exception as e:
+        messagebox.showerror("Помилка", str(e))
     def calculate(self):
             a = self.num1.get()
             b = self.num2.get()
@@ -71,7 +88,6 @@ class CalculatorApp:
                 messagebox.showerror("Помилка", str(e))
                 logging.error(f"Помилка обчислення: {e}")
 
-    # Add export data functions
 if __name__ == "__main__":
     root = tk.Tk()
     app = CalculatorApp(root)
