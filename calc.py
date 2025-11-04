@@ -61,7 +61,7 @@ def import_data(self):
                 raise ValueError("Недостатньо параметрів у файлі.")
     except Exception as e:
         messagebox.showerror("Помилка", str(e))
-    def calculate(self):
+def calculate(self):
             a = self.num1.get()
             b = self.num2.get()
             op = self.operation.get()
