@@ -44,7 +44,34 @@ class CalculatorApp:
         self.input_path = "Input data.txt"
         self.output_path = "Output data.txt"
 
-        # Add import/export data, calculate functions
+    def calculate(self):
+            a = self.num1.get()
+            b = self.num2.get()
+            op = self.operation.get()
+            try:
+                if op == "+":
+                    self.result = a + b
+                elif op == "-":
+                    self.result = a - b
+                elif op == "*":
+                    self.result = a * b
+                elif op == "/":
+                    if b == 0:
+                        raise ZeroDivisionError("Ділення на нуль")
+                    self.result = a / b
+                elif op == "**":
+                    self.result = a ** b
+                else:
+                    raise ValueError("Невідома операція")
+
+                self.result_label.config(text=f"Результат: {self.result}")
+                logging.info(f"Виконано: {a} {op} {b} = {self.result}")
+
+            except Exception as e:
+                messagebox.showerror("Помилка", str(e))
+                logging.error(f"Помилка обчислення: {e}")
+
+    # Add export data functions
 if __name__ == "__main__":
     root = tk.Tk()
     app = CalculatorApp(root)
